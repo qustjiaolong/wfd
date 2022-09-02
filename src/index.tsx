@@ -15,6 +15,7 @@ import ToolbarPanel from "./components/ToolbarPanel";
 import registerShape from './shape'
 import registerBehavior from './behavior'
 import { IDefaultModel, IProcessModel, ISelectData } from './types';
+const events = require('events');
 registerShape(G6);
 registerBehavior(G6);
 
@@ -25,6 +26,8 @@ export interface DesignerProps {
   isView?: boolean;
   /** 模式为只读或编辑 */
   mode: 'default' | 'view' | 'edit';
+  /** 总线对象 */
+  emitter: any;
   /** 语言 */
   lang?: 'en' | 'zh';
   /** 流程数据 */
@@ -33,6 +36,8 @@ export interface DesignerProps {
   users?: ISelectData[];
   /** 审核组 */
   groups?: ISelectData[];
+  projects?: ISelectData[];
+  docs?: ISelectData[];
 }
 
 export interface DesignerStates {
@@ -119,11 +124,12 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
       },
     });
     this.graph.saveXML = (createFile = true) => exportXML(this.graph.save(),this.state.processModel,createFile);
-    if(isView){
-      this.graph.setMode("view");
-    }else{
-      this.graph.setMode(mode);
-    }
+    // if(isView){
+    //   this.graph.setMode("view");
+    // }else{
+    //   this.graph.setMode(mode);
+    // }
+    this.graph.setMode(mode);
     this.graph.data(this.props.data ? this.initShape(this.props.data) : {nodes:[],edges:[]});
     this.graph.render();
     if(isView && this.props.data && this.props.data.nodes){
@@ -148,6 +154,7 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
   }
 
   initEvents(){
+    const {emitter} =this.props
     this.graph.on('afteritemselected',(items)=>{
       if(items && items.length > 0) {
         let item = this.graph.findById(items[0]);
@@ -155,6 +162,9 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
           item = this.getNodeInSubProcess(items[0])
         }
         this.setState({selectedModel: {...item.getModel()}});
+        if(emitter){
+          emitter.emit("onClickItem",items)
+        }
       } else {
         this.setState({selectedModel: this.state.processModel});
       }
@@ -225,7 +235,7 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
 
   render() {
     const height = this.props.height;
-    const { isView,mode,users,groups,lang } = this.props;
+    const { isView,mode,projects,lang,docs,data } = this.props;
     const { selectedModel,processModel } = this.state;
     const { signalDefs, messageDefs } = processModel;
     const i18n = locale[lang.toLowerCase()];
@@ -241,8 +251,10 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
                                       height={height}
                                       model={selectedModel}
                                       readOnly={readOnly}
-                                      users={users}
-                                      groups={groups}
+                                      projects={projects}
+                                      docs={docs}
+                                      data={data}
+                                      // groups={groups}
                                       signalDefs={signalDefs}
                                       messageDefs={messageDefs}
                                       onChange={(key,val)=>{this.onItemCfgChange(key,val)}} />

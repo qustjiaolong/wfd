@@ -15,6 +15,7 @@ export default function(G6){
           this.graph.executeCommand('delete', {});
         }else{
           this.graph.remove(items[0]);
+          this.graph.emit('itemChanged',items[0]);
         }
         this.graph.set('selectedItems',[]);
         this.graph.emit('afteritemselected',[]);

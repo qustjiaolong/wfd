@@ -22,11 +22,11 @@ const DefaultDetail: React.FC<DefaultProps> = ({model,onChange,readOnly = false,
                disabled={readOnly}
         />
       </div>
-      <div className={styles.panelRow}>
+      {/* <div className={styles.panelRow}>
         <Checkbox onChange={(e) => onChange('hideIcon', e.target.checked)}
                   disabled={readOnly}
                   checked={!!model.hideIcon}>{i18n['hideIcon']}</Checkbox>
-      </div>
+      </div> */}
     </>
   )
 };

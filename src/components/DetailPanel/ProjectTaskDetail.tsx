@@ -4,24 +4,77 @@ import React, {useContext} from "react";
 import moment from "moment";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
-import { ISelectData, IUserModel } from '../../types';
+import { ISelectData, IProjectModel } from '../../types';
 
-export interface UserProps {
-  model: IUserModel;
+export interface ProjectProps {
+  model: IProjectModel;
   onChange: (...args: any[]) => any;
   readOnly: boolean;
-  users: ISelectData[];
-  groups: ISelectData[];
+  // users: ISelectData[];
+  // groups: ISelectData[];
+  projects: ISelectData[];
+  docs: ISelectData[];
 }
-const UserTaskDetail: React.FC<UserProps> = ({model,users,groups,onChange,readOnly = false,}) => {
+const ProjectTaskDetail: React.FC<ProjectProps> = ({model,projects,docs,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
-  const title = i18n['userTask'];
+  const title = '项目节点';
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>
       <div className={styles.panelBody}>
         <DefaultDetail model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
+          <div>选择项目：</div>
+          <Select
+            // mode="multiple"
+            showSearch
+            style={{width: '100%', fontSize: 12}}
+            placeholder="请选择项目"
+            optionFilterProp="children"
+            defaultValue={model.projectId}
+            onChange={(e) => onChange('projectId', e)}
+            filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
+            disabled={readOnly}
+          >
+            {projects && projects.map(proj => (<Select.Option key={proj.id} value={proj.id}>{proj.name}</Select.Option>))}
+          </Select>
+        </div>
+
+        <div className={styles.panelRow}>
+          <div>选择输入文件：</div>
+          <Select
+            // mode="multiple"
+            showSearch
+            style={{width: '100%', fontSize: 12}}
+            placeholder="请选择项目"
+            optionFilterProp="children"
+            defaultValue={model.inputDocs}
+            onChange={(e) => onChange('inputDocs', e)}
+            filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
+            disabled={readOnly}
+          >
+            {docs && docs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.name}</Select.Option>))}
+          </Select>
+        </div>
+
+        <div className={styles.panelRow}>
+          <div>选择输出文件：</div>
+          <Select
+            // mode="multiple"
+            showSearch
+            style={{width: '100%', fontSize: 12}}
+            placeholder="请选择项目"
+            optionFilterProp="children"
+            defaultValue={model.outputDocs}
+            onChange={(e) => onChange('outputDocs', e)}
+            filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
+            disabled={readOnly}
+          >
+            {docs && docs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.name}</Select.Option>))}
+          </Select>
+        </div>
+
+        {/* <div className={styles.panelRow}>
           <div>{i18n['userTask.assignType']}：</div>
           <Select
             style={{width: '100%', fontSize: 12}}
@@ -104,10 +157,10 @@ const UserTaskDetail: React.FC<UserProps> = ({model,users,groups,onChange,readOn
           <Checkbox onChange={(e) => onChange('isSequential', e.target.checked)}
                     disabled={readOnly}
                     checked={!!model.isSequential}>{i18n['userTask.counterSign']}</Checkbox>
-        </div>
+        </div> */}
       </div>
     </div>
   )
 };
 
-export default UserTaskDetail;
+export default ProjectTaskDetail;

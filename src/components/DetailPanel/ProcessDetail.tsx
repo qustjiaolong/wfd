@@ -59,7 +59,7 @@ const ProcessDetail: React.FC<ProcessProps> = ({model,onChange,readOnly = false,
                    disabled={readOnly}
             />
           </div>
-          <div className={styles.panelRow}>
+          {/* <div className={styles.panelRow}>
             <div>
               {i18n['process.dataObjs']}：
               <Button disabled={readOnly} onClick={()=> setDataObjsModalVisible(true)}>{i18n['tooltip.edit']}</Button>
@@ -76,10 +76,10 @@ const ProcessDetail: React.FC<ProcessProps> = ({model,onChange,readOnly = false,
               {i18n['process.messageDefs']}：
               <Button disabled={readOnly} onClick={()=> setMessageDefsModalVisible(true)}>{i18n['tooltip.edit']}</Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-      <DataTableModal title={i18n['process.dataObjs']}
+      {/* <DataTableModal title={i18n['process.dataObjs']}
                       lang={lang}
                       newRowKeyPrefix="dataObj"
                       cols={dataObjCols}
@@ -111,7 +111,7 @@ const ProcessDetail: React.FC<ProcessProps> = ({model,onChange,readOnly = false,
                         setMessageDefsModalVisible(false);
                         onChange('messageDefs',d);
                       }}
-                      onCancel={() => setMessageDefsModalVisible(false)} />
+                      onCancel={() => setMessageDefsModalVisible(false)} /> */}
     </>
   )
 };

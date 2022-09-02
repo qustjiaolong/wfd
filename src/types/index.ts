@@ -25,6 +25,12 @@ export interface IUserModel extends IDefaultModel {
   isSequential?: boolean;
   javaClass?: string;
 }
+export interface IProjectModel extends IDefaultModel {
+  projectId?: number;
+  inputDocs?: object[];
+  outputDocs?: object[];
+}
+
 export interface IMessageModel extends IDefaultModel {
   message?: string;
 }
@@ -51,6 +57,7 @@ export interface IFlowModel extends IDefaultModel {
   conditionExpression?: string;
   seq?: string;
   reverse?: boolean;
+  relatedDocs?:object[]
 }
 export interface IProcessModel extends IDefaultModel {
   name?: string;

@@ -12,8 +12,8 @@ const ItemPanel = forwardRef<any, ItemPanelProps>(({height},ref) => {
   const { i18n } = useContext(LangContext);
   return (
     <div ref={ref} className={styles.itemPanel} style={{ height }}>
-      <Collapse bordered={false} defaultActiveKey={[]}>
-        <Panel header={i18n['start']} key="1" forceRender>
+      <Collapse bordered={false} defaultActiveKey={2}>
+        {/* <Panel header={i18n['start']} key="1" forceRender>
           <img data-item={"{clazz:'start',size:'30*30',label:''}"}
                src={require('../assets/flow/start.svg')} style={{width: 42, height: 42}}/>
           <div>{i18n['startEvent']}</div>
@@ -26,15 +26,15 @@ const ItemPanel = forwardRef<any, ItemPanelProps>(({height},ref) => {
           <img data-item={"{clazz:'signalStart',size:'30*30',label:''}"}
                src={require('../assets/flow/signal-start.svg')} style={{width: 42, height: 42}}/>
           <div>{i18n['signalEvent']}</div>
-        </Panel>
+        </Panel> */}
         <Panel header={i18n['task']} key="2" forceRender>
-          <img data-item={"{clazz:'userTask',size:'80*44',label:'"+i18n['userTask']+"'}"}
-               src={require('../assets/flow/user-task.svg')} style={{width: 80, height: 44}}/>
+          <img data-item={"{clazz:'userTask',hideIcon:true,size:'80*44',label:'"+i18n['userTask']+"'}"}
+               src={require('../assets/flow/sub-process.svg')} style={{width: 80, height: 44}}/>
           <div>{i18n['userTask']}</div>
-          {/*<img data-item="{clazz:'subProcess',size:'80*44',label:''}"*/}
-          {/*       src={require('../assets/flow/sub-process.svg')} style={{width: 80, height: 44}}/>*/}
-          {/*<div>{i18n['subProcess']}</div>*/}
-          <img data-item={"{clazz:'scriptTask',size:'80*44',label:'"+i18n['scriptTask']+"'}"}
+          {/* <img data-item="{clazz:'subProcess',size:'80*44',label:''}"
+                 src={require('../assets/flow/sub-process.svg')} style={{width: 80, height: 44}}/>
+          <div>{i18n['subProcess']}</div> */}
+          {/* <img data-item={"{clazz:'scriptTask',size:'80*44',label:'"+i18n['scriptTask']+"'}"}
                src={require('../assets/flow/script-task.svg')} style={{width: 80, height: 44}}/>
           <div>{i18n['scriptTask']}</div>
           <img data-item={"{clazz:'javaTask',size:'80*44',label:'"+i18n['javaTask']+"'}"}
@@ -45,9 +45,9 @@ const ItemPanel = forwardRef<any, ItemPanelProps>(({height},ref) => {
           <div>{i18n['mailTask']}</div>
           <img data-item={"{clazz:'receiveTask',size:'80*44',label:'"+i18n['receiveTask']+"'}"}
                src={require('../assets/flow/receive-task.svg')} style={{width: 80, height: 44}}/>
-          <div>{i18n['receiveTask']}</div>
+          <div>{i18n['receiveTask']}</div> */}
         </Panel>
-        <Panel header={i18n['gateway']} key="3" forceRender>
+        {/* <Panel header={i18n['gateway']} key="3" forceRender>
           <img data-item="{clazz:'exclusiveGateway',size:'40*40',label:''}"
                src={require('../assets/flow/exclusive-gateway.svg')} style={{width: 48, height: 48}}/>
           <div>{i18n['exclusiveGateway']}</div>
@@ -73,7 +73,7 @@ const ItemPanel = forwardRef<any, ItemPanelProps>(({height},ref) => {
           <img data-item={"{clazz:'end',size:'30*30',label:''}"}
                src={require('../assets/flow/end.svg')} style={{width: 42, height: 42}}/>
           <div>{i18n['endEvent']}</div>
-        </Panel>
+        </Panel> */}
       </Collapse>
     </div>
   )
