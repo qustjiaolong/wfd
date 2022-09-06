@@ -32,7 +32,6 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,data,projects,docs,onC
       prevNodeIds.push(element.source)
     });
     const prevNodes = data.nodes.filter(node=>prevNodeIds.indexOf(node.id)>-1)
-    console.log(prevNodes)
     if(prevNodes){
       let ds=[]
       prevNodes.forEach(element => {

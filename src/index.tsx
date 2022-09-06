@@ -154,7 +154,6 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
   }
 
   initEvents(){
-    const {emitter} =this.props
     this.graph.on('afteritemselected',(items)=>{
       if(items && items.length > 0) {
         let item = this.graph.findById(items[0]);
@@ -162,11 +161,15 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
           item = this.getNodeInSubProcess(items[0])
         }
         this.setState({selectedModel: {...item.getModel()}});
-        if(emitter){
-          emitter.emit("onClickItem",items)
-        }
       } else {
         this.setState({selectedModel: this.state.processModel});
+      }
+    });
+    this.graph.on('clickItem',(item)=>{
+      const {emitter} =this.props
+      if(emitter){
+        emitter.emit("onClickItem",item)
+        this.graph.setItemState(item, 'selected', true);
       }
     });
     const page = this.pageRef.current;

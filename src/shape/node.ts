@@ -13,6 +13,14 @@ const dashArray = [
   [3,2,1,2],
   [4,2,1,2]
 ];
+const fillColor={
+  finish:'#c9efca',
+  pending:'#e9ecf4',
+  finishSelected:'#4caf50',
+  pendingSelected:'#9e9e9e',
+  running:'#f9f9f9',
+  runningSelected:'#eee'
+}
 const interval = 9;
 const lineDash = [4, 2, 1, 2];
 const nodeDefinition:ShapeOptions = {
@@ -136,12 +144,13 @@ const nodeDefinition:ShapeOptions = {
         (group as any).clearAnchor();
       }
     } else if (name === 'selected') {
-      const rect = group.getChildByIndex(0);
-      if (value) {
-        rect.attr('fill', this.options.stateStyles.selected.fill);
-      } else {
-        rect.attr('fill', this.options.style.fill);
-      }
+      // const rect = group.getChildByIndex(0);
+      this.fillStatus(item.getModel(),group,value)
+      // if (value) {
+      //   rect.attr('fill', this.options.stateStyles.selected.fill);
+      // } else {
+      //   rect.attr('fill', this.options.style.fill);
+      // }
     } else if (name === 'hover') {
       const rect = group.getChildByIndex(0);
       const text = group.getChildByIndex(1);
@@ -190,8 +199,33 @@ const nodeDefinition:ShapeOptions = {
       });
     }
   },
+  // 根据状态填充
+  fillStatus(cfg, group,selected){
+    const shape = group.getFirst();
+    if(cfg.status){
+      if(selected){
+        shape.attr('fill',fillColor[cfg.status+'Selected'])
+      } else {
+        shape.attr('fill',fillColor[cfg.status])
+      }
+      if(cfg.status==="finish"){
+        shape.attr('stroke',"#00ff00")
+      }
+      if(cfg.status==="pending"){
+        shape.attr('stroke',"#c2cbd0")
+      }
+    } else {
+      if (selected) {
+        shape.attr('fill', this.options.stateStyles.selected.fill);
+      } else {
+        shape.attr('fill', this.options.style.fill);
+      }
+    }
+  },
+
   afterDraw(cfg, group) {
     this.runAnimate(cfg,group);
+    this.fillStatus(cfg,group,false);
   },
   afterUpdate(cfg, group) {
     const icon = group.get('group').icon;

@@ -24,6 +24,7 @@ export default function(G6) {
       selectedItems = [e.item.get('id')];
       this.graph.set('selectedItems', selectedItems);
       this.graph.emit('afteritemselected', selectedItems);
+      this.graph.emit('clickItem', e.item);
     },
     onNodeMouseOver(e) {
       if (this.graph.getCurrentMode() === 'edit')

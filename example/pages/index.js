@@ -44,7 +44,8 @@ class Demo extends PureComponent {
                     "d0.1",
                     "d0.7"
                 ],
-                "nodeNum": "p1.1"
+                "nodeNum": "p1.1",
+                status:"finish"
             },
             {
                 "type": "user-task-node",
@@ -72,7 +73,8 @@ class Demo extends PureComponent {
                 "outputDocs": [
                     "d1.4",
                     "d1.5"
-                ]
+                ],
+                status:"pending"
             },
             {
                 "type": "user-task-node",
@@ -100,7 +102,8 @@ class Demo extends PureComponent {
                 ],
                 "outputDocs": [
                     "d1.6"
-                ]
+                ],
+                active:true
             },
             {
                 "type": "user-task-node",
@@ -129,7 +132,8 @@ class Demo extends PureComponent {
                 ],
                 "outputDocs": [
                     "d1.7"
-                ]
+                ],
+                status:"pending"
             },
             {
                 "type": "user-task-node",
@@ -905,6 +909,7 @@ class Demo extends PureComponent {
   componentDidMount (){
     emitter.on('onClickItem',(item)=>{
       this.handleSave()
+      console.log(item)
     })
   }
   handleSave = () => {
@@ -912,7 +917,7 @@ class Demo extends PureComponent {
     const newData = this.wfdRef.current.graph.save();
 
     this.setState({data:newData})
-    console.log(data)
+    // console.log(data)
   }
 
   langMenu = (
