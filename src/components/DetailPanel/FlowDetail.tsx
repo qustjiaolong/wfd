@@ -3,35 +3,36 @@ import {Checkbox, Input,Select} from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from './DefaultDetail';
 import LangContext from "../../util/context";
-import { IFlowModel, ISelectData, } from '../../types';
+import { IFlowModel, ISelectData,IFileData } from '../../types';
 import { filter } from "@antv/util";
 
 export interface FlowProps {
   model: IFlowModel;
   onChange: (...args: any[]) => any;
   readOnly: boolean;
-  data: any;
+  // data: any;
+  docs:IFileData[]
 }
-const FlowDetail: React.FC<FlowProps> = ({model, data,onChange,readOnly = false,}) => {
+const FlowDetail: React.FC<FlowProps> = ({model, docs, onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['sequenceFlow'];
-  console.log(data)
-  console.log(model)
-  let sourceNode = undefined
-  if(data && data.nodes){
-    const filterNodes = data.nodes.filter(node=>node.id===model.source)
-    if(filterNodes){
-      sourceNode = filterNodes[0]
-    }
-  }
-  console.log(sourceNode)
+  // let sourceNode = undefined
+  // let filteredDocs = []
+  // if(data && data.nodes){
+  //   const filterNodes = data.nodes.filter(node=>node.id===model.source)
+  //   if(filterNodes){
+  //     sourceNode = filterNodes[0]
+  //     filteredDocs=docs.filter(doc=>sourceNode.outputDocs.indexOf(doc.id)>-1)
+  //   }
+  // }
+  // console.log(sourceNode)
 
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>
       <div className={styles.panelBody}>
         <DefaultDetail model={model} onChange={onChange} readOnly={readOnly} />
-        {sourceNode&&<div className={styles.panelRow}>
+        {/* {sourceNode&&<div className={styles.panelRow}>
           <div>选择依赖文件：</div>
           <Select
             mode="multiple"
@@ -41,13 +42,13 @@ const FlowDetail: React.FC<FlowProps> = ({model, data,onChange,readOnly = false,
             optionFilterProp="children"
             defaultValue={model.relatedDocs}
             onChange={(e) => onChange('relatedDocs', e)}
-            filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
+            filterOption={(input, option) => option.props.children.indexOf(input) >= 0}
             disabled={readOnly}
           >
-            {sourceNode.outputDocs&&sourceNode.outputDocs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.name}</Select.Option>))}
+            {filteredDocs&&filteredDocs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.nodeName}/{doc.name}</Select.Option>))}
           </Select>
         </div>
-        }
+        } */}
         {/* <div className={styles.panelRow}>
           <div>{i18n['sequenceFlow.expression']}：</div>
           <Input.TextArea style={{width: '100%', fontSize: 12}}

@@ -4,7 +4,8 @@ import React, {useContext} from "react";
 import moment from "moment";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
-import { ISelectData, IProjectModel } from '../../types';
+import { ISelectData, IProjectModel,IFileData } from '../../types';
+import DescriptionsItem from "antd/lib/descriptions/Item";
 
 export interface ProjectProps {
   model: IProjectModel;
@@ -13,11 +14,55 @@ export interface ProjectProps {
   // users: ISelectData[];
   // groups: ISelectData[];
   projects: ISelectData[];
-  docs: ISelectData[];
+  docs?: IFileData[];
+  data: any;
 }
-const ProjectTaskDetail: React.FC<ProjectProps> = ({model,projects,docs,onChange,readOnly = false,}) => {
+const ProjectTaskDetail: React.FC<ProjectProps> = ({model,data,projects,docs,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = '项目节点';
+
+  let inputDocs = docs.filter(d=>d.nodeNum==="")
+  let outputDocs = docs.filter(d=>d.nodeNum===model.nodeNum || d.nodeName.indexOf(model.nodeNum)>-1)
+
+  // 查找前置节点，确认输入列表
+  const prevEdges = data.edges.filter(e=>e.target===model.id)
+  if(prevEdges && prevEdges.length>0){
+    const prevNodeIds = []
+    prevEdges.forEach(element => {
+      prevNodeIds.push(element.source)
+    });
+    const prevNodes = data.nodes.filter(node=>prevNodeIds.indexOf(node.id)>-1)
+    console.log(prevNodes)
+    if(prevNodes){
+      let ds=[]
+      prevNodes.forEach(element => {
+        ds=ds.concat(element.outputDocs)
+        ds=ds.concat(element.inputDocs)
+      });
+      let relateDocs=docs.filter(d=>ds.indexOf(d.id)>-1)
+      relateDocs=relateDocs.concat(inputDocs)
+      const dsNew = new Set(relateDocs)
+      inputDocs = Array.from(dsNew)
+    }
+  }
+  inputDocs.sort((a,b)=>{
+    let aNum = 0
+    let bNum = 0
+    if(a.id.length==4){
+      aNum = parseFloat(a.id.substring(1,))*10
+    } else {
+      aNum = parseFloat(a.id.substring(1,))*100
+    }
+    if(b.id.length==4){
+      bNum = parseFloat(b.id.substring(1,))*10
+    } else {
+      bNum = parseFloat(b.id.substring(1,))*100
+    }
+    aNum = aNum + parseInt(a.id.substring(1,2)) * 1000
+    bNum = bNum + parseInt(b.id.substring(1,2)) * 1000
+    return aNum-bNum
+  })
+
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>
@@ -33,7 +78,7 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,projects,docs,onChange
             optionFilterProp="children"
             defaultValue={model.projectId}
             onChange={(e) => onChange('projectId', e)}
-            filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
+            filterOption={(input, option) => option.props.children.indexOf(input) >= 0}
             disabled={readOnly}
           >
             {projects && projects.map(proj => (<Select.Option key={proj.id} value={proj.id}>{proj.name}</Select.Option>))}
@@ -43,34 +88,37 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,projects,docs,onChange
         <div className={styles.panelRow}>
           <div>选择输入文件：</div>
           <Select
-            // mode="multiple"
+            mode="multiple"
             showSearch
             style={{width: '100%', fontSize: 12}}
             placeholder="请选择项目"
             optionFilterProp="children"
             defaultValue={model.inputDocs}
             onChange={(e) => onChange('inputDocs', e)}
-            filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
+            filterOption={(input, option) => {
+              return option.props.children.indexOf(input) >= 0
+            }
+          }
             disabled={readOnly}
           >
-            {docs && docs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.name}</Select.Option>))}
+            {inputDocs && inputDocs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.nodeName}/{doc.id}-{doc.name}</Select.Option>))}
           </Select>
         </div>
 
         <div className={styles.panelRow}>
           <div>选择输出文件：</div>
           <Select
-            // mode="multiple"
+            mode="multiple"
             showSearch
             style={{width: '100%', fontSize: 12}}
             placeholder="请选择项目"
             optionFilterProp="children"
             defaultValue={model.outputDocs}
             onChange={(e) => onChange('outputDocs', e)}
-            filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
+            filterOption={(input, option) => option.props.children.indexOf(input) >= 0}
             disabled={readOnly}
           >
-            {docs && docs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.name}</Select.Option>))}
+            {outputDocs && outputDocs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.nodeName}/{doc.id}-{doc.name}</Select.Option>))}
           </Select>
         </div>
 

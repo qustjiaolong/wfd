@@ -24,7 +24,7 @@ export interface DetailProps{
   // users: ISelectData[];
   // groups: ISelectData[];
   projects: ISelectData[];
-  docs: ISelectData[];
+  docs: any;
   messageDefs: ISelectData[];
   signalDefs: ISelectData[];
   onChange: (...args: any[]) => any;
@@ -34,7 +34,7 @@ export interface DetailProps{
 const DetailPanel = forwardRef<any, DetailProps>(({data,height,model,projects,docs,messageDefs,signalDefs,onChange,readOnly = false},ref)=>{
   return (
     <div ref={ref} className={styles.detailPanel} style={{height}}>
-      { model.clazz === 'userTask' && <ProjectTaskDetail model={model} onChange={onChange} readOnly={readOnly} projects={projects} docs={docs} />}
+      { model.clazz === 'userTask' && <ProjectTaskDetail model={model} data={data} onChange={onChange} readOnly={readOnly} projects={projects} docs={docs} />}
       { model.clazz === 'scriptTask' && <ScriptTaskDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'javaTask' && <JavaTaskDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'receiveTask' && <ReceiveTaskDetail model={model} onChange={onChange} readOnly={readOnly} /> }
@@ -43,7 +43,7 @@ const DetailPanel = forwardRef<any, DetailProps>(({data,height,model,projects,do
       { (model.clazz === 'signalStart' || model.clazz === 'signalCatch') && <SignalEventDetail model={model} signalDefs={signalDefs} onChange={onChange} readOnly={readOnly}/>}
       { (model.clazz === 'messageStart' || model.clazz === 'messageCatch') && <MessageEventDetail model={model} messageDefs={messageDefs} onChange={onChange} readOnly={readOnly}/>}
       { (model.clazz === 'gateway' || model.clazz === 'exclusiveGateway' || model.clazz === 'parallelGateway' || model.clazz === 'inclusiveGateway') && <GatewayDetail model={model} onChange={onChange} readOnly={readOnly} /> }
-      { model.clazz === 'flow' && <FlowDetail model={model} onChange={onChange} readOnly={readOnly} data={data} /> }
+      { model.clazz === 'flow' && <FlowDetail model={model} onChange={onChange} readOnly={readOnly} docs={docs} /> }
       { model.clazz === 'start' && <StartEventDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'end' && <EndEventDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'process' && <ProcessDetail model={model} onChange={onChange} readOnly={readOnly} /> }

@@ -37,7 +37,7 @@ export interface DesignerProps {
   /** 审核组 */
   groups?: ISelectData[];
   projects?: ISelectData[];
-  docs?: ISelectData[];
+  docs?: any;
 }
 
 export interface DesignerStates {

@@ -15,6 +15,15 @@ const DefaultDetail: React.FC<DefaultProps> = ({model,onChange,readOnly = false,
   return (
     <>
       <div className={styles.panelRow}>
+        <div>流程编号：</div>
+        <Input style={{width: '100%', fontSize: 12}}
+              value={model.nodeNum}
+              onChange={(e) => onChange('nodeNum', e.target.value)}
+              disabled={readOnly}
+        />
+      </div>
+
+      <div className={styles.panelRow}>
         <div>{i18n['label']}：</div>
         <Input style={{width: '100%', fontSize: 12}}
                value={model.label}

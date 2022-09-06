@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
 export interface IDefaultModel {
   id?: string;
+  nodeNum?:string;
   clazz?: 'start' | 'end' | 'gateway' | 'exclusiveGateway' | 'parallelGateway' | 'inclusiveGateway'
     | 'timerStart' | 'messageStart' | 'signalStart' | 'userTask' | 'scriptTask' | 'mailTask'
     | 'javaTask' | 'receiveTask' | 'timerCatch' | 'messageCatch' | 'signalCatch' | 'subProcess' | 'flow' | 'process';
@@ -69,4 +70,12 @@ export interface IProcessModel extends IDefaultModel {
 export interface ISelectData {
   id?: string;
   name?: string;
+}
+
+export interface IFileData {
+  id?: string;
+  name?: string;
+  deparment?: string;
+  nodeNum?: string;
+  nodeName?: string;
 }
