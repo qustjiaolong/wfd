@@ -18,8 +18,8 @@ const fillColor={
   pending:'#e9ecf4',
   finishSelected:'#4caf50',
   pendingSelected:'#9e9e9e',
-  running:'#f9f9f9',
-  runningSelected:'#eee'
+  running:'#E7F7FE',
+  runningSelected:'#95D6FB'
 }
 const interval = 9;
 const lineDash = [4, 2, 1, 2];
