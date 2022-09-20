@@ -202,7 +202,8 @@ class Demo extends PureComponent {
                 "outputDocs": [
                     "d1.12",
                     "d1.13"
-                ]
+                ],
+                status:"reopen"
             },
             {
                 "type": "user-task-node",
@@ -233,7 +234,8 @@ class Demo extends PureComponent {
                     "d1.16",
                     "d1.17",
                     "d1.18"
-                ]
+                ],
+                status:"reopen"
             },
             {
                 "type": "user-task-node",
@@ -917,7 +919,7 @@ class Demo extends PureComponent {
     const newData = this.wfdRef.current.graph.save();
 
     this.setState({data:newData})
-    // console.log(data)
+    console.log(data)
   }
 
   langMenu = (

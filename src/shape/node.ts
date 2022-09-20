@@ -15,11 +15,13 @@ const dashArray = [
 ];
 const fillColor={
   finish:'#c9efca',
-  pending:'#e9ecf4',
   finishSelected:'#4caf50',
+  pending:'#e9ecf4',
   pendingSelected:'#9e9e9e',
   running:'#E7F7FE',
-  runningSelected:'#95D6FB'
+  runningSelected:'#95D6FB',
+  reopen:'#FFCCCC',
+  reopenSelected:'#FF6666'
 }
 const interval = 9;
 const lineDash = [4, 2, 1, 2];

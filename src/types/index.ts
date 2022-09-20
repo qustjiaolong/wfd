@@ -73,7 +73,7 @@ export interface ISelectData {
 }
 
 export interface IFileData {
-  id?: string;
+  fileNo?: string;
   name?: string;
   deparment?: string;
   nodeNum?: string;

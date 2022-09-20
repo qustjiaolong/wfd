@@ -185,7 +185,10 @@ export default function (G6) {
     },
     _addEdge() {
       if (this.origin.targetNode) {
+        const sourceId = this.origin.sourceNode.get('id');
+        const targetId = this.origin.targetNode.get('id');
         const addModel:EdgeConfig = {
+          id: sourceId + '_to_' + targetId,
           clazz: 'flow',
           source: this.origin.sourceNode.get('id'),
           target: this.origin.targetNode.get('id'),

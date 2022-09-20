@@ -38,7 +38,7 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,data,projects,docs,onC
         ds=ds.concat(element.outputDocs)
         ds=ds.concat(element.inputDocs)
       });
-      let relateDocs=docs.filter(d=>ds.indexOf(d.id)>-1)
+      let relateDocs=docs.filter(d=>ds.indexOf(d.fileNo)>-1)
       relateDocs=relateDocs.concat(inputDocs)
       const dsNew = new Set(relateDocs)
       inputDocs = Array.from(dsNew)
@@ -47,18 +47,18 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,data,projects,docs,onC
   inputDocs.sort((a,b)=>{
     let aNum = 0
     let bNum = 0
-    if(a.id.length==4){
-      aNum = parseFloat(a.id.substring(1,))*10
+    if(a.fileNo.length==4){
+      aNum = parseFloat(a.fileNo.substring(1,))*10
     } else {
-      aNum = parseFloat(a.id.substring(1,))*100
+      aNum = parseFloat(a.fileNo.substring(1,))*100
     }
-    if(b.id.length==4){
-      bNum = parseFloat(b.id.substring(1,))*10
+    if(b.fileNo.length==4){
+      bNum = parseFloat(b.fileNo.substring(1,))*10
     } else {
-      bNum = parseFloat(b.id.substring(1,))*100
+      bNum = parseFloat(b.fileNo.substring(1,))*100
     }
-    aNum = aNum + parseInt(a.id.substring(1,2)) * 1000
-    bNum = bNum + parseInt(b.id.substring(1,2)) * 1000
+    aNum = aNum + parseInt(a.fileNo.substring(1,2)) * 1000
+    bNum = bNum + parseInt(b.fileNo.substring(1,2)) * 1000
     return aNum-bNum
   })
 
@@ -90,7 +90,7 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,data,projects,docs,onC
             mode="multiple"
             showSearch
             style={{width: '100%', fontSize: 12}}
-            placeholder="请选择项目"
+            placeholder="请选择输入文件"
             optionFilterProp="children"
             defaultValue={model.inputDocs}
             onChange={(e) => onChange('inputDocs', e)}
@@ -100,7 +100,7 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,data,projects,docs,onC
           }
             disabled={readOnly}
           >
-            {inputDocs && inputDocs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.nodeName}/{doc.id}-{doc.name}</Select.Option>))}
+            {inputDocs && inputDocs.map(doc => (<Select.Option key={doc.fileNo} value={doc.fileNo}>{doc.nodeName}/{doc.fileNo}-{doc.name}</Select.Option>))}
           </Select>
         </div>
 
@@ -110,14 +110,14 @@ const ProjectTaskDetail: React.FC<ProjectProps> = ({model,data,projects,docs,onC
             mode="multiple"
             showSearch
             style={{width: '100%', fontSize: 12}}
-            placeholder="请选择项目"
+            placeholder="请选择输出文件"
             optionFilterProp="children"
             defaultValue={model.outputDocs}
             onChange={(e) => onChange('outputDocs', e)}
             filterOption={(input, option) => option.props.children.indexOf(input) >= 0}
             disabled={readOnly}
           >
-            {outputDocs && outputDocs.map(doc => (<Select.Option key={doc.id} value={doc.id}>{doc.nodeName}/{doc.id}-{doc.name}</Select.Option>))}
+            {outputDocs && outputDocs.map(doc => (<Select.Option key={doc.fileNo} value={doc.fileNo}>{doc.nodeName}/{doc.fileNo}-{doc.name}</Select.Option>))}
           </Select>
         </div>
 
